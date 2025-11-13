@@ -1,0 +1,91 @@
+import 'dart:async';
+import 'dart:ui' as ui;
+import 'package:coffee_sas/Presentation/features/cashier_page/view/cashier_screen.dart';
+import 'package:coffee_sas/data/datasources/seed_biscuits.dart';
+import 'package:coffee_sas/data/datasources/seed_blends.dart';
+import 'package:coffee_sas/data/datasources/seed_drinks.dart';
+import 'package:coffee_sas/data/datasources/seed_products.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_localizations/flutter_localizations.dart'
+    show
+        GlobalMaterialLocalizations,
+        GlobalWidgetsLocalizations,
+        GlobalCupertinoLocalizations;
+import 'package:provider/provider.dart';
+import 'Presentation/features/cashier_page/data/cashier_datasource.dart';
+import 'Presentation/features/cashier_page/domain/cashier_repository.dart';
+import 'Presentation/features/cashier_page/viewmodel/cashier_viewmodel.dart';
+// import 'Presentation/splash screen/splash_screen.dart';
+import 'firebase_options.dart';
+
+Future<void> main() async {
+  runZonedGuarded(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      FlutterError.onError = (FlutterErrorDetails details) {
+        FlutterError.presentError(details);
+        debugPrint('⚠️ FlutterError: ${details.exceptionAsString()}');
+        if (details.stack != null) debugPrint(details.stack.toString());
+      };
+
+      ui.PlatformDispatcher.instance.onError =
+          (Object error, StackTrace stack) {
+            debugPrint('⚠️ Uncaught async error: $error');
+            debugPrint(stack.toString());
+            return true;
+          };
+
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+
+      if (kDebugMode) {
+        try {
+          // await seedBiscuits();
+          await seedDrinksFixed();
+          await seedSingles();
+          await seedBlends();
+        } catch (e, st) {
+          debugPrint('❌ seeding failed: $e');
+          debugPrint(st.toString());
+        }
+      }
+
+      runApp(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (_) =>
+                  CashierViewModel(CashierRepository(CashierDataSource())),
+            ),
+          ],
+          child: const MyApp(),
+        ),
+      );
+    },
+    (Object error, StackTrace stack) {
+      debugPrint('⚠️ Zone error: $error');
+      debugPrint(stack.toString());
+    },
+  );
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      supportedLocales: [Locale('ar'), Locale('en')],
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      debugShowCheckedModeBanner: false,
+      home: CashierHome(),
+    );
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "70518328030",
+    "project_id": "coffeesas-b4a7c",
+    "storage_bucket": "coffeesas-b4a7c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70518328030:android:c50433113de75d4b32104f",
+        "android_client_info": {
+          "package_name": "com.example.coffee_sas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-Mxv76b1xRAZ7Cg7H10vl6crhHXRg1P0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
