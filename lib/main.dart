@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:coffee_sas/Presentation/features/cashier_page/view/cashier_screen.dart';
-import 'package:coffee_sas/data/datasources/seed_biscuits.dart';
-import 'package:coffee_sas/data/datasources/seed_blends.dart';
-import 'package:coffee_sas/data/datasources/seed_drinks.dart';
-import 'package:coffee_sas/data/datasources/seed_products.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:coffee_sas/data/datasources/seed_biscuits.dart';
+// import 'package:coffee_sas/data/datasources/seed_blends.dart';
+// import 'package:coffee_sas/data/datasources/seed_drinks.dart';
+// import 'package:coffee_sas/data/datasources/seed_products.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart'
@@ -41,17 +41,17 @@ Future<void> main() async {
         options: DefaultFirebaseOptions.currentPlatform,
       );
 
-      if (kDebugMode) {
-        try {
-          // await seedBiscuits();
-          await seedDrinksFixed();
-          await seedSingles();
-          await seedBlends();
-        } catch (e, st) {
-          debugPrint('❌ seeding failed: $e');
-          debugPrint(st.toString());
-        }
-      }
+      // if (kDebugMode) {
+      //   try {
+      //     // await seedBiscuits();
+      //     await seedDrinksFixed();
+      //     await seedSingles();
+      //     await seedBlends();
+      //   } catch (e, st) {
+      //     debugPrint('❌ seeding failed: $e');
+      //     debugPrint(st.toString());
+      //   }
+      // }
 
       runApp(
         MultiProvider(
